@@ -1,6 +1,6 @@
 # group-array [![NPM version](https://badge.fury.io/js/group-array.svg)](http://badge.fury.io/js/group-array)  [![Build Status](https://travis-ci.org/doowb/group-array.svg)](https://travis-ci.org/doowb/group-array)
 
-> Group objects in arrays into lists.
+> Group array of objects into lists.
 
 Install with [npm](https://www.npmjs.com/)
 
