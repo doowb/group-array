@@ -26,5 +26,15 @@
     "arr-reduce": "^1.0.1",
     "get-value": "^1.1.5",
     "union-value": "^0.1.1"
+  },
+  "verb": {
+    "related": {
+      "list": [
+        "group-object",
+        "get-value",
+        "union-value",
+        "arr-reduce"
+      ]
+    }
   }
 }

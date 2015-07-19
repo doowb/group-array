@@ -68,6 +68,7 @@ var groups = groupBy(arr, grouper, setter);
 
 ## Related projects
 
+* [arr-reduce](https://github.com/jonschlinkert/arr-reduce): Fast array reduce that also loops over sparse elements.
 * [group-object](https://github.com/doowb/group-object): Group object keys and values into lists.
 * [get-value](https://github.com/jonschlinkert/get-value): Use property paths (`  a.b.c`) to get a nested value from an object.
 * [union-value](https://github.com/jonschlinkert/union-value): Set an array of unique values as the property of an object. Supports setting deeply… [more](https://github.com/jonschlinkert/union-value)
