@@ -21,5 +21,10 @@
   },
   "devDependencies": {
     "mocha": "*"
+  },
+  "dependencies": {
+    "arr-reduce": "^1.0.1",
+    "get-value": "^1.1.5",
+    "union-value": "^0.1.1"
   }
 }
