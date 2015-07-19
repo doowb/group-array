@@ -1,11 +1,11 @@
-# group-array [![NPM version](https://badge.fury.io/js/group-array.svg)](http://badge.fury.io/js/group-array)  [![Build Status](https://travis-ci.org/doowb/group-array.svg)](https://travis-ci.org/doowb/group-array) 
+# group-array [![NPM version](https://badge.fury.io/js/group-array.svg)](http://badge.fury.io/js/group-array)  [![Build Status](https://travis-ci.org/doowb/group-array.svg)](https://travis-ci.org/doowb/group-array)
 
 > Group objects in arrays into lists.
 
-## Install with [npm](npmjs.org)
+Install with [npm](https://www.npmjs.com/)
 
-```bash
-npm i group-array --save
+```sh
+$ npm i group-array --save
 ```
 
 ## Usage
@@ -15,35 +15,86 @@ var groupArray = require('group-array');
 ```
 
 ## API
-<!-- add a path or glob pattern for files with code comments to use for docs  -->
-{%= apidocs("index.js") %}
 
-## Related projects
-<!-- add an array of related projects, then un-escape the helper -->
-{%= related([]) %}  
+### [groupBy](index.js#L63)
 
-## Running tests
-Install dev dependencies.
+Create groupings from array's values.
 
-```bash
-npm i -d && npm test
+**Params**
+
+* `arr` **{Array}**: Array to group.
+* `grouper` **{Function}**: Optional grouping function that takes `acc, value, i, arr, setter`
+* `setter` **{Function}**: Optional setter function that takes `acc, group, value, i, arr`
+* `acc` **{Object|Array}**: Optional accumulator object or array passed to the setter function.
+* `returns` **{Object|Array}**: Object or array containing groups as keys and list of objects as values in the group.
+
+**Example**
+
+```js
+function grouper (acc, value, i, arr, setter) {
+  return value.group;
+}
+
+function setter (acc, group, value, i, arr) {
+  acc[group] = acc[group] || [];
+  acc[group].push(value);
+}
+
+var arr = [
+  { group: 'one', content: 'A'},
+  { group: 'one', content: 'B'},
+  { group: 'two', content: 'C'},
+  { group: 'two', content: 'D'},
+  { group: 'three', content: 'E'},
+  { group: 'three', content: 'F'}
+];
+
+var groups = groupBy(arr, grouper, setter);
+//=> {
+//=>   one: [
+//=>     { group: 'one', content: 'A'},
+//=>     { group: 'one', content: 'B'}
+//=>   ],
+//=>   two: [
+//=>     { group: 'two', content: 'C'},
+//=>     { group: 'two', content: 'D'}
+//=>   ],
+//=>   three: [
+//=>     { group: 'three', content: 'E'},
+//=>     { group: 'three', content: 'F'}
+//=>   ]
+//=> }
 ```
 
+## Related projects
+
+* [group-object](https://github.com/doowb/group-object): Group object keys and values into lists.
+* [get-value](https://github.com/jonschlinkert/get-value): Use property paths (`  a.b.c`) to get a nested value from an object.
+* [union-value](https://github.com/jonschlinkert/union-value): Set an array of unique values as the property of an object. Supports setting deeply… [more](https://github.com/jonschlinkert/union-value)
+
+## Running tests
+
+Install dev dependencies:
+
+```sh
+$ npm i -d && npm test
+```
 
 ## Contributing
-Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/doowb/group-array/issues)
 
+Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/doowb/group-array/issues/new)
 
 ## Author
 
 **Brian Woodward**
- 
+
 + [github/doowb](https://github.com/doowb)
-+ [twitter/doowb](http://twitter.com/doowb) 
++ [twitter/doowb](http://twitter.com/doowb)
 
 ## License
+
 Copyright © 2015 Brian Woodward
-Released under the MIT license
+Released under the MIT license.
 
 ***
 
