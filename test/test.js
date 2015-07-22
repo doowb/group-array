@@ -3,6 +3,9 @@
 /* deps: mocha */
 var util = require('util');
 var assert = require('assert');
+var union = require('union-value');
+var get = require('get-value');
+var _ = require('lodash');
 var groupArray = require('../');
 require('should');
 
@@ -116,19 +119,38 @@ describe('group-array', function () {
     });
   });
 
-  it('should create groups from properties with object values:', function () {
+  it.only('should create groups from properties with object values:', function () {
     var arr = [
-      { data: { categories: { one: [ 'one' ] }}, content: 'A'},
+      { data: { categories: { one: [ 'one' ], four: ['five', 'six'] }}, content: 'A'},
       { data: { categories: { one: [ 'one' ] }}, content: 'B'},
-      { data: { categories: { one: [ 'two' ] }}, content: 'C'},
-      { data: { categories: { two: [ 'two' ] }}, content: 'D'},
-      { data: { categories: { two: [ 'three' ] }}, content: 'E'},
+      { data: { categories: { one: [ 'two' ], four: ['five', 'six'] }}, content: 'C'},
+      { data: { categories: { two: [ 'two' ], four: ['five', 'six'] }}, content: 'D'},
+      { data: { categories: { two: [ 'three' ], four: ['five', 'six'] }}, content: 'E'},
       { data: { categories: { two: [ 'three' ] }}, content: 'F'}
     ];
 
-    var actual = groupArray(arr, 'data.categories');
+    function getChildren(prop) {
+      return function (obj) {
+        var val = get(obj, prop);
+        var self = this;
 
-    assert.deepEqual(Object.keys(actual), ['one', 'two']);
+        _.forOwn(val, function (arr) {
+          arr.forEach(function (key) {
+            union(self, key, [obj]);
+          });
+        });
+
+        return;
+      }
+    }
+
+    // var actual = groupArray(arr, 'data.categories', getChildren('data.categories'));
+
+    var actual = groupArray(arr, function (obj) {
+      obj.data['year-month'] = obj.data.year + '-' + obj.data.month;
+    } 'data.year-month');
+
+    // assert.deepEqual(Object.keys(actual), ['one', 'two']);
   });
 
   it('should create multiple, nested groups:', function () {

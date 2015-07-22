@@ -40,23 +40,24 @@ function groupBy(arr, prop) {
     var obj = arr[i];
     var key;
 
+    // allow a function to modify the object
+    // and/or return a key to use
     if (typeof prop === 'function') {
-      key = prop(obj);
+      key = prop.call(groups, obj);
     } else {
       key = get(obj, prop);
-      if (typeof key == 'string') {
-        groups[key] = groups[key] || [];
-        groups[key].push(obj);
-      } else if (typeOf(key) === 'object') {
-        var value = key;
-        for (var k in value) {
-          if (value.hasOwnProperty(k)) {
-            groups[k] = groups[k] || [];
-            groups[k].push(obj);
-          }
+    }
+
+    if (typeof key === 'string') {
+      groups[key] = groups[key] || [];
+      groups[key].push(obj);
+    } else if (typeOf(key) === 'object') {
+      var value = key;
+      for (var k in value) {
+        if (value.hasOwnProperty(k)) {
+          groups[k] = groups[k] || [];
+          groups[k].push(obj);
         }
-      } else {
-        throw new TypeError('group-array expects group keys to be strings or objects: ' + JSON.stringify(key));
       }
     }
   }
