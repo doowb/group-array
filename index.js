@@ -7,6 +7,7 @@
 
 'use strict';
 
+var typeOf = require('kind-of');
 var get = require('get-value');
 
 function groupArray(arr, props) {
@@ -43,13 +44,21 @@ function groupBy(arr, prop) {
       key = prop(obj);
     } else {
       key = get(obj, prop);
-      if (typeof key !== 'string') {
-        throw new TypeError('group-array expects group keys to be strings: ' + JSON.stringify(key));
+      if (typeof key == 'string') {
+        groups[key] = groups[key] || [];
+        groups[key].push(obj);
+      } else if (typeOf(key) === 'object') {
+        var value = key;
+        for (var k in value) {
+          if (value.hasOwnProperty(k)) {
+            groups[k] = groups[k] || [];
+            groups[k].push(obj);
+          }
+        }
+      } else {
+        throw new TypeError('group-array expects group keys to be strings or objects: ' + JSON.stringify(key));
       }
     }
-
-    groups[key] = groups[key] || [];
-    groups[key].push(obj);
   }
   return groups;
 }

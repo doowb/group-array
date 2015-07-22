@@ -1,6 +1,7 @@
 'use strict';
 
 /* deps: mocha */
+var util = require('util');
 var assert = require('assert');
 var groupArray = require('../');
 require('should');
@@ -13,12 +14,12 @@ describe('errors', function () {
   });
 
   it('should throw an error when the group `key` is not a string:', function () {
-    var arr = [{foo: {bar: 'baz'}, content: 'A'}];
-    var foo = JSON.stringify({bar: 'baz'});
+    var arr = [{foo: function(){}, content: 'A'}];
+    var foo = JSON.stringify(function(){});
 
     (function () {
       groupArray(arr, 'foo');
-    }).should.throw('group-array expects group keys to be strings: ' + foo);
+    }).should.throw('group-array expects group keys to be strings or objects: ' + foo);
   });
 });
 
@@ -113,6 +114,21 @@ describe('group-array', function () {
         {data: {tag: 'three'}, content: 'F'}
       ],
     });
+  });
+
+  it('should create groups from properties with object values:', function () {
+    var arr = [
+      { data: { categories: { one: [ 'one' ] }}, content: 'A'},
+      { data: { categories: { one: [ 'one' ] }}, content: 'B'},
+      { data: { categories: { one: [ 'two' ] }}, content: 'C'},
+      { data: { categories: { two: [ 'two' ] }}, content: 'D'},
+      { data: { categories: { two: [ 'three' ] }}, content: 'E'},
+      { data: { categories: { two: [ 'three' ] }}, content: 'F'}
+    ];
+
+    var actual = groupArray(arr, 'data.categories');
+
+    assert.deepEqual(Object.keys(actual), ['one', 'two']);
   });
 
   it('should create multiple, nested groups:', function () {

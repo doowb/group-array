@@ -24,7 +24,8 @@
     "should": "^7.0.2"
   },
   "dependencies": {
-    "get-value": "^1.1.5"
+    "get-value": "^1.1.5",
+    "kind-of": "^2.0.0"
   },
   "keywords": [
     "array",
