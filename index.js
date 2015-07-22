@@ -24,6 +24,7 @@ function groupArray(arr, props) {
 
   props = flatten([].slice.call(arguments, 1));
   var groups = groupBy(arr, props.shift());
+
   while (props.length) {
     subGroup(groups, props.shift());
   }
@@ -36,11 +37,17 @@ function groupBy(arr, prop) {
 
   while (++i < len) {
     var obj = arr[i];
-    var key = get(obj, prop);
+    var key;
 
-    if (typeof key !== 'string') {
-      throw new TypeError('group-array expects group keys to be strings: ' + JSON.stringify(key));
+    if (typeof prop === 'function') {
+      key = prop(obj);
+    } else {
+      key = get(obj, prop);
+      if (typeof key !== 'string') {
+        throw new TypeError('group-array expects group keys to be strings: ' + JSON.stringify(key));
+      }
     }
+
     groups[key] = groups[key] || [];
     groups[key].push(obj);
   }
