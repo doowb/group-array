@@ -20,13 +20,22 @@
     "test": "mocha"
   },
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "^2.2.5",
+    "should": "^7.0.2"
   },
   "dependencies": {
-    "arr-reduce": "^1.0.1",
-    "get-value": "^1.1.5",
-    "union-value": "^0.1.1"
+    "get-value": "^1.1.5"
   },
+  "keywords": [
+    "array",
+    "group",
+    "item",
+    "list",
+    "nested",
+    "prop",
+    "properties",
+    "property"
+  ],
   "verb": {
     "related": {
       "list": [
