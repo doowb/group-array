@@ -59,6 +59,8 @@ function groupBy(arr, prop) {
           groups[k].push(obj);
         }
       }
+    } else if (typeOf(key) === 'function') {
+      throw new Error('group-array expects group keys to be strings, objects or undefined: ' + key);
     }
   }
   return groups;

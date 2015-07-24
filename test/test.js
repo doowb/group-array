@@ -5,7 +5,7 @@ var util = require('util');
 var assert = require('assert');
 var union = require('union-value');
 var get = require('get-value');
-var _ = require('lodash');
+var forOwn = require('for-own');
 var groupArray = require('../');
 require('should');
 
@@ -18,11 +18,11 @@ describe('errors', function () {
 
   it('should throw an error when the group `key` is not a string:', function () {
     var arr = [{foo: function(){}, content: 'A'}];
-    var foo = JSON.stringify(function(){});
+    var foo = function(){};
 
     (function () {
       groupArray(arr, 'foo');
-    }).should.throw('group-array expects group keys to be strings or objects: ' + foo);
+    }).should.throw('group-array expects group keys to be strings, objects or undefined: ' + foo);
   });
 });
 
@@ -119,7 +119,7 @@ describe('group-array', function () {
     });
   });
 
-  it.only('should create groups from properties with object values:', function () {
+  it('should create groups from properties with object values:', function () {
     var arr = [
       { data: { categories: { one: [ 'one' ], four: ['five', 'six'] }}, content: 'A'},
       { data: { categories: { one: [ 'one' ] }}, content: 'B'},
@@ -134,23 +134,41 @@ describe('group-array', function () {
         var val = get(obj, prop);
         var self = this;
 
-        _.forOwn(val, function (arr) {
+        forOwn(val, function (arr) {
           arr.forEach(function (key) {
             union(self, key, [obj]);
           });
         });
-
-        return;
-      }
+      };
     }
 
-    // var actual = groupArray(arr, 'data.categories', getChildren('data.categories'));
+    var actual = groupArray(arr, 'data.categories', getChildren('data.categories'));
+    assert.deepEqual(Object.keys(actual), ['one', 'four', 'two']);
+  });
 
-    var actual = groupArray(arr, function (obj) {
-      obj.data['year-month'] = obj.data.year + '-' + obj.data.month;
-    } 'data.year-month');
+  it('should create groups and ignore objects without matching property values:', function () {
+    var arr = [
+      {tag: 'one', content: 'A'},
+      {content: 'B'},
+      {tag: 'two', content: 'C'},
+      {content: 'D'},
+      {tag: 'three', content: 'E'},
+      {content: 'F'}
+    ];
 
-    // assert.deepEqual(Object.keys(actual), ['one', 'two']);
+    var actual = groupArray(arr, 'tag');
+
+    assert.deepEqual(actual, {
+      one: [
+        {tag: 'one', content: 'A'}
+      ],
+      two: [
+        {tag: 'two', content: 'C'}
+      ],
+      three: [
+        {tag: 'three', content: 'E'}
+      ],
+    });
   });
 
   it('should create multiple, nested groups:', function () {
