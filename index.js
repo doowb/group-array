@@ -10,7 +10,7 @@
 var typeOf = require('kind-of');
 var get = require('get-value');
 
-function groupArray(arr, props) {
+function groupFn(arr, props) {
   if (arr == null) {
     return [];
   }
@@ -38,32 +38,44 @@ function groupBy(arr, prop) {
 
   while (++i < len) {
     var obj = arr[i];
-    var key;
+    var val;
 
     // allow a function to modify the object
-    // and/or return a key to use
+    // and/or return a val to use
     if (typeof prop === 'function') {
-      key = prop.call(groups, obj);
+      val = prop.call(groups, obj);
     } else {
-      key = get(obj, prop);
+      val = get(obj, prop);
     }
 
-    if (typeof key === 'string') {
-      groups[key] = groups[key] || [];
-      groups[key].push(obj);
-    } else if (typeOf(key) === 'object') {
-      var value = key;
-      for (var k in value) {
-        if (value.hasOwnProperty(k)) {
-          groups[k] = groups[k] || [];
-          groups[k].push(obj);
-        }
-      }
-    } else if (typeOf(key) === 'function') {
+    if (typeof val === 'string') {
+      groups[val] = groups[val] || [];
+      groups[val].push(obj);
+    } else if (typeOf(val) === 'object') {
+      groupObject(groups, obj, val);
+    } else if (Array.isArray(val)) {
+      groupArray(groups, obj, val);
+    } else if (typeOf(val) === 'function') {
       throw new Error('group-array expects group keys to be strings, objects or undefined: ' + key);
     }
   }
   return groups;
+}
+
+function groupObject(groups, obj, val) {
+  for (var k in val) {
+    if (val.hasOwnProperty(k)) {
+      groups[k] = groups[k] || [];
+      groups[k].push(obj);
+    }
+  }
+}
+
+function groupArray(groups, obj, val) {
+  val.forEach(function (item) {
+    groups[item] = groups[item] || [];
+    groups[item].push(obj);
+  });
 }
 
 function subGroup(groups, prop) {
@@ -73,7 +85,7 @@ function subGroup(groups, prop) {
       if (!Array.isArray(val)) {
         groups[key] = subGroup(val, prop);
       } else {
-        groups[key] = groupArray(val, prop);
+        groups[key] = groupFn(val, prop);
       }
     }
   }
@@ -92,4 +104,4 @@ function flatten(arr) {
  * Expose `groupArray`
  */
 
-module.exports = groupArray;
+module.exports = groupFn;

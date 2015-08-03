@@ -15,15 +15,6 @@ describe('errors', function () {
       groupArray('');
     }).should.throw('group-array expects an array.');
   });
-
-  it('should throw an error when the group `key` is not a string:', function () {
-    var arr = [{foo: function(){}, content: 'A'}];
-    var foo = function(){};
-
-    (function () {
-      groupArray(arr, 'foo');
-    }).should.throw('group-array expects group keys to be strings, objects or undefined: ' + foo);
-  });
 });
 
 describe('group-array', function () {
@@ -169,6 +160,31 @@ describe('group-array', function () {
         {tag: 'three', content: 'E'}
       ],
     });
+  });
+
+  it('should support properties with array values:', function () {
+    var fixture = require('./fixtures/tags-array.js');
+    var actual = groupArray(fixture, 'tags');
+    assert.deepEqual(actual, require('./expected/tags-array.js'));
+  });
+
+  it('should group nested properties with array values that are created by a function:', function () {
+    var fixture = require('./fixtures/categories-tags.js');
+    var actual = groupArray(fixture, 'categories', function  (obj) {
+      obj.tags = [];
+      for (var key in obj.categories) {
+        if (obj.categories.hasOwnProperty(key)) {
+          var tags = obj.categories[key];
+          tags.forEach(function (tag) {
+            if (obj.tags.indexOf(tag) === -1) {
+              obj.tags.push(tag);
+            }
+          });
+        }
+      }
+      return obj.tags;
+    });
+    assert.deepEqual(actual, require('./expected/categories-tags.js'));
   });
 
   it('should create multiple, nested groups:', function () {
