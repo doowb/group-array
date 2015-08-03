@@ -170,19 +170,8 @@ describe('group-array', function () {
 
   it('should group nested properties with array values that are created by a function:', function () {
     var fixture = require('./fixtures/categories-tags.js');
-    var actual = groupArray(fixture, 'categories', function  (obj) {
-      obj.tags = [];
-      for (var key in obj.categories) {
-        if (obj.categories.hasOwnProperty(key)) {
-          var tags = obj.categories[key];
-          tags.forEach(function (tag) {
-            if (obj.tags.indexOf(tag) === -1) {
-              obj.tags.push(tag);
-            }
-          });
-        }
-      }
-      return obj.tags;
+    var actual = groupArray(fixture, 'categories', function  (obj, key) {
+      return obj.categories[key];
     });
     assert.deepEqual(actual, require('./expected/categories-tags.js'));
   });
