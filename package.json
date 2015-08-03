@@ -1,7 +1,7 @@
 {
   "name": "group-array",
   "description": "Group array of objects into lists.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "homepage": "https://github.com/doowb/group-array",
   "author": "Brian Woodward (https://github.com/doowb)",
   "repository": "doowb/group-array",
