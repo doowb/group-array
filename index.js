@@ -32,7 +32,7 @@ function groupFn(arr, props) {
   return groups;
 }
 
-function groupBy(arr, prop) {
+function groupBy(arr, prop, key) {
   var len = arr.length, i = -1;
   var groups = {};
 
@@ -43,7 +43,7 @@ function groupBy(arr, prop) {
     // allow a function to modify the object
     // and/or return a val to use
     if (typeof prop === 'function') {
-      val = prop.call(groups, obj);
+      val = prop.call(groups, obj, key);
     } else {
       val = get(obj, prop);
     }
@@ -85,7 +85,7 @@ function subGroup(groups, prop) {
       if (!Array.isArray(val)) {
         groups[key] = subGroup(val, prop);
       } else {
-        groups[key] = groupFn(val, prop);
+        groups[key] = groupBy(val, prop, key);
       }
     }
   }
