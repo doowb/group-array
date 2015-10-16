@@ -49,5 +49,17 @@
         "arr-reduce"
       ]
     }
-  }
+  },
+  "contributors": [
+    {
+      "name": "Brian Woodward",
+      "email": "brian.woodward@gmail.com",
+      "url": "https://github.com/doowb"
+    },
+    {
+      "name": "Jon Schlinkert",
+      "email": "github@sellside.com",
+      "url": "https://github.com/jonschlinkert"
+    }
+  ]
 }
