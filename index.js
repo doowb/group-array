@@ -48,7 +48,7 @@ function groupBy(arr, prop, key) {
       val = get(obj, prop);
     }
 
-    if (typeof val === 'string') {
+    if (typeof val === 'string' || typeof val === 'number') {
       groups[val] = groups[val] || [];
       groups[val].push(obj);
     } else if (typeOf(val) === 'object') {

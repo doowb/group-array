@@ -110,6 +110,34 @@ describe('group-array', function () {
     });
   });
 
+  it('should create groups based on numeric values of nested properties', function(){
+    var arr = [
+      { data: { tag: 1 }, content: 'A'},
+      { data: { tag: 1 }, content: 'B'},
+      { data: { tag: 2 }, content: 'C'},
+      { data: { tag: 2 }, content: 'D'},
+      { data: { tag: 3 }, content: 'E'},
+      { data: { tag: 3 }, content: 'F'}
+    ];
+
+    var actual = groupArray(arr, 'data.tag');
+
+    assert.deepEqual(actual, {
+      1: [
+        {data: {tag: 1}, content: 'A'},
+        {data: {tag: 1}, content: 'B'}
+      ],
+      2: [
+        {data: {tag: 2}, content: 'C'},
+        {data: {tag: 2}, content: 'D'}
+      ],
+      3: [
+        {data: {tag: 3}, content: 'E'},
+        {data: {tag: 3}, content: 'F'}
+      ],
+    });
+  });
+
   it('should create groups from properties with object values:', function () {
     var arr = [
       { data: { categories: { one: [ 'one' ], four: ['five', 'six'] }}, content: 'A'},
