@@ -72,7 +72,7 @@ function groupObject(groups, obj, val) {
 }
 
 function groupArray(groups, obj, val) {
-  val.forEach(function (item) {
+  val.forEach(function(item) {
     groups[item] = groups[item] || [];
     groups[item].push(obj);
   });
