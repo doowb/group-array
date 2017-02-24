@@ -26,13 +26,12 @@
   },
   "dependencies": {
     "get-value": "^2.0.6",
-    "kind-of": "^3.0.3"
+    "kind-of": "^3.1.0"
   },
   "devDependencies": {
     "for-own": "^0.1.4",
-    "gulp-format-md": "^0.1.9",
-    "mocha": "^2.5.3",
-    "should": "^9.0.2",
+    "gulp-format-md": "^0.1.11",
+    "should": "^11.2.0",
     "union-value": "^0.2.3"
   },
   "keywords": [
