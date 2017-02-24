@@ -4,6 +4,11 @@
   "version": "0.3.1",
   "homepage": "https://github.com/doowb/group-array",
   "author": "Brian Woodward (https://github.com/doowb)",
+  "contributors": [
+    "Brian Woodward <brian.woodward@gmail.com> (https://github.com/doowb)",
+    "Chris Kirk (http://www.chrispkirk.com)",
+    "Jon Schlinkert <jon.schlinkert@sellside.com> (http://twitter.com/jonschlinkert)"
+  ],
   "repository": "doowb/group-array",
   "bugs": {
     "url": "https://github.com/doowb/group-array/issues"
@@ -19,16 +24,16 @@
   "scripts": {
     "test": "mocha"
   },
+  "dependencies": {
+    "get-value": "^2.0.6",
+    "kind-of": "^3.0.3"
+  },
   "devDependencies": {
     "for-own": "^0.1.4",
     "gulp-format-md": "^0.1.9",
     "mocha": "^2.5.3",
     "should": "^9.0.2",
     "union-value": "^0.2.3"
-  },
-  "dependencies": {
-    "get-value": "^2.0.6",
-    "kind-of": "^3.0.3"
   },
   "keywords": [
     "array",
@@ -51,18 +56,18 @@
     ],
     "related": {
       "list": [
-        "group-object",
+        "arr-reduce",
         "get-value",
-        "union-value",
-        "arr-reduce"
+        "group-object",
+        "union-value"
       ]
     },
     "lint": {
       "reflinks": true
     },
     "reflinks": [
-      "verb-generate-readme",
-      "verb"
+      "verb",
+      "verb-generate-readme"
     ]
   }
 }
