@@ -57,18 +57,18 @@
     ],
     "related": {
       "list": [
-        "arr-reduce",
+        "arr-flatten",
         "get-value",
         "group-object",
         "union-value"
       ]
     },
-    "lint": {
-      "reflinks": true
-    },
     "reflinks": [
       "verb",
       "verb-generate-readme"
-    ]
+    ],
+    "lint": {
+      "reflinks": true
+    }
   }
 }
