@@ -25,14 +25,16 @@
     "test": "mocha"
   },
   "dependencies": {
+    "arr-flatten": "^1.0.1",
+    "for-own": "^0.1.4",
     "get-value": "^2.0.6",
-    "kind-of": "^3.1.0"
+    "kind-of": "^3.1.0",
+    "union-value": "^0.2.3"
   },
   "devDependencies": {
-    "for-own": "^0.1.4",
     "gulp-format-md": "^0.1.11",
-    "should": "^11.2.0",
-    "union-value": "^0.2.3"
+    "mocha": "^3.2.0",
+    "should": "^11.2.0"
   },
   "keywords": [
     "array",

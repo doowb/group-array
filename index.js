@@ -7,6 +7,9 @@
 
 'use strict';
 
+var union = require('union-value');
+var flatten = require('arr-flatten');
+var forOwn = require('for-own');
 var typeOf = require('kind-of');
 var get = require('get-value');
 
@@ -23,20 +26,19 @@ function groupFn(arr, props) {
     return arr;
   }
 
-  props = flatten([].slice.call(arguments, 1));
-  var groups = groupBy(arr, props.shift());
+  var args = flatten([].slice.call(arguments, 1));
+  var groups = groupBy(arr, args[0]);
 
-  while (props.length) {
-    subGroup(groups, props.shift());
+  for (var i = 1; i < args.length; i++) {
+    toGroup(groups, args[i]);
   }
   return groups;
 }
 
 function groupBy(arr, prop, key) {
-  var len = arr.length, i = -1;
   var groups = {};
 
-  while (++i < len) {
+  for (var i = 0; i < arr.length; i++) {
     var obj = arr[i];
     var val;
 
@@ -48,56 +50,45 @@ function groupBy(arr, prop, key) {
       val = get(obj, prop);
     }
 
-    if (typeof val === 'string' || typeof val === 'number') {
-      groups[val] = groups[val] || [];
-      groups[val].push(obj);
-    } else if (typeOf(val) === 'object') {
-      groupObject(groups, obj, val);
-    } else if (Array.isArray(val)) {
-      groupArray(groups, obj, val);
-    } else if (typeOf(val) === 'function') {
-      throw new Error('group-array expects group keys to be strings, objects or undefined: ' + key);
+    switch (typeOf(val)) {
+      case 'undefined':
+        break;
+      case 'string':
+      case 'number':
+        union(groups, String(val), obj);
+        break;
+      case 'object':
+      case 'array':
+        eachValue(groups, obj, val);
+        break;
+      case 'function':
+        throw new Error('invalid argument type: ' + key);
     }
   }
   return groups;
 }
 
-function groupObject(groups, obj, val) {
-  for (var k in val) {
-    if (val.hasOwnProperty(k)) {
-      groups[k] = groups[k] || [];
-      groups[k].push(obj);
-    }
+function eachValue(groups, obj, val) {
+  if (Array.isArray(val)) {
+    val.forEach(function(key) {
+      union(groups, key, obj);
+    });
+  } else {
+    forOwn(val, function(v, key) {
+      union(groups, key, obj);
+    });
   }
 }
 
-function groupArray(groups, obj, val) {
-  val.forEach(function(item) {
-    groups[item] = groups[item] || [];
-    groups[item].push(obj);
+function toGroup(groups, prop) {
+  forOwn(groups, function(val, key) {
+    if (!Array.isArray(val)) {
+      groups[key] = toGroup(val, prop, key);
+    } else {
+      groups[key] = groupBy(val, prop, key);
+    }
   });
-}
-
-function subGroup(groups, prop) {
-  for (var key in groups) {
-    if (groups.hasOwnProperty(key)) {
-      var val = groups[key];
-      if (!Array.isArray(val)) {
-        groups[key] = subGroup(val, prop);
-      } else {
-        groups[key] = groupBy(val, prop, key);
-      }
-    }
-  }
   return groups;
-}
-
-/**
- * Flatten the given array.
- */
-
-function flatten(arr) {
-  return [].concat.apply([], arr);
 }
 
 /**
