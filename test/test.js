@@ -54,6 +54,34 @@ describe('group-array', function() {
     });
   });
 
+  it('should create groups based on the value of the specified property when the value has dots', function() {
+    var arr = [
+      {tag: 'one.foo', content: 'A'},
+      {tag: 'one.foo', content: 'B'},
+      {tag: 'two.bar', content: 'C'},
+      {tag: 'two.bar', content: 'D'},
+      {tag: 'three.baz', content: 'E'},
+      {tag: 'three.baz', content: 'F'}
+    ];
+
+    var actual = groupArray(arr, 'tag');
+
+    assert.deepEqual(actual, {
+      'one.foo': [
+        {tag: 'one.foo', content: 'A'},
+        {tag: 'one.foo', content: 'B'}
+      ],
+      'two.bar': [
+        {tag: 'two.bar', content: 'C'},
+        {tag: 'two.bar', content: 'D'}
+      ],
+      'three.baz': [
+        {tag: 'three.baz', content: 'E'},
+        {tag: 'three.baz', content: 'F'}
+      ],
+    });
+  });
+
   it('should create groups based on numeric values of the specified property', function() {
     var arr = [
       {tag: 1, content: 'A'},
