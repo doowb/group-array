@@ -55,6 +55,7 @@ function groupBy(arr, prop, key) {
         break;
       case 'string':
       case 'number':
+      case 'boolean':
         union(groups, String(val), obj);
         break;
       case 'object':
