@@ -54,6 +54,60 @@ describe('group-array', function() {
     });
   });
 
+  it('should create groups based on numeric values of the specified property', function() {
+    var arr = [
+      {tag: 1, content: 'A'},
+      {tag: 1, content: 'B'},
+      {tag: 2, content: 'C'},
+      {tag: 2, content: 'D'},
+      {tag: 3, content: 'E'},
+      {tag: 3, content: 'F'}
+    ];
+
+    var actual = groupArray(arr, 'tag');
+
+    assert.deepEqual(actual, {
+      '1': [
+        {tag: 1, content: 'A'},
+        {tag: 1, content: 'B'}
+      ],
+      '2': [
+        {tag: 2, content: 'C'},
+        {tag: 2, content: 'D'}
+      ],
+      '3': [
+        {tag: 3, content: 'E'},
+        {tag: 3, content: 'F'}
+      ],
+    });
+  });
+
+  it('should create groups based on boolean values of the specified property', function() {
+    var arr = [
+      {tag: true, content: 'A'},
+      {tag: false, content: 'B'},
+      {tag: true, content: 'C'},
+      {tag: false, content: 'D'},
+      {tag: true, content: 'E'},
+      {tag: false, content: 'F'}
+    ];
+
+    var actual = groupArray(arr, 'tag');
+
+    assert.deepEqual(actual, {
+      'true': [
+        {tag: true, content: 'A'},
+        {tag: true, content: 'C'},
+        {tag: true, content: 'E'},
+      ],
+      'false': [
+        {tag: false, content: 'B'},
+        {tag: false, content: 'D'},
+        {tag: false, content: 'F'}
+      ]
+    });
+  });
+
   it('should support passing the property as an array:', function() {
     var arr = [
       {tag: 'one', content: 'A'},
