@@ -29,7 +29,7 @@
     "for-own": "^0.1.4",
     "get-value": "^2.0.6",
     "kind-of": "^3.1.0",
-    "split-string": "^1.0.0",
+    "split-string": "^1.0.1",
     "union-value": "^0.2.3"
   },
   "devDependencies": {
