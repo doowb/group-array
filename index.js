@@ -7,8 +7,9 @@
 
 'use strict';
 
-var union = require('union-value');
+var split = require('split-string');
 var flatten = require('arr-flatten');
+var union = require('union-value');
 var forOwn = require('for-own');
 var typeOf = require('kind-of');
 var get = require('get-value');
@@ -56,7 +57,7 @@ function groupBy(arr, prop, key) {
       case 'string':
       case 'number':
       case 'boolean':
-        union(groups, String(val), obj);
+        union(groups, escape(String(val)), obj);
         break;
       case 'object':
       case 'array':
@@ -72,11 +73,11 @@ function groupBy(arr, prop, key) {
 function eachValue(groups, obj, val) {
   if (Array.isArray(val)) {
     val.forEach(function(key) {
-      union(groups, key, obj);
+      union(groups, escape(key), obj);
     });
   } else {
     forOwn(val, function(v, key) {
-      union(groups, key, obj);
+      union(groups, escape(key), obj);
     });
   }
 }
@@ -90,6 +91,21 @@ function toGroup(groups, prop) {
     }
   });
   return groups;
+}
+
+function escape(str) {
+  var opts = {
+    strict: false,
+    keepEscaping: true,
+    keepDoubleQuotes: true,
+    keepSingleQuotes: true
+  };
+
+  try {
+    return split(str, opts).join('\\.');
+  } catch (err) {
+    return str;
+  }
 }
 
 /**
