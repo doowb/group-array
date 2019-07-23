@@ -5,9 +5,10 @@
   "homepage": "https://github.com/doowb/group-array",
   "author": "Brian Woodward (https://github.com/doowb)",
   "contributors": [
-    "Brian Woodward <brian.woodward@gmail.com> (https://twitter.com/doowb)",
+    "Brian Woodward (https://twitter.com/doowb)",
     "Chris Kirk (http://www.chrispkirk.com)",
-    "Jon Schlinkert <jon.schlinkert@sellside.com> (http://twitter.com/jonschlinkert)"
+    "Johnathan Lyman (https://johnathan.org)",
+    "Jon Schlinkert (http://twitter.com/jonschlinkert)"
   ],
   "repository": "doowb/group-array",
   "bugs": {
@@ -19,7 +20,7 @@
   ],
   "main": "index.js",
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=8"
   },
   "scripts": {
     "test": "mocha"

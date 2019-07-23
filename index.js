@@ -1,10 +1,3 @@
-/*!
- * group-array <https://github.com/doowb/group-array>
- *
- * Copyright (c) 2015, 2017, Brian Woodward.
- * Released under the MIT License.
- */
-
 'use strict';
 
 var split = require('split-string');
