@@ -323,3 +323,11 @@ describe('group-array', () => {
     assert.deepEqual(actual, require('./expected/insanely-nested.js'));
   });
 });
+
+describe('issues', () => {
+  it('#10 should group keys with double quotes in the values', () => {
+    let fixture = require('./fixtures/issue-10.js');
+    let actual = groupArray(fixture, 'tagKey');
+    assert.deepEqual(actual, require('./expected/issue-10.js'));
+  });
+});
