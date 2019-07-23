@@ -26,17 +26,17 @@
     "test": "mocha"
   },
   "dependencies": {
-    "arr-flatten": "^1.0.1",
-    "for-own": "^0.1.4",
-    "get-value": "^2.0.6",
-    "kind-of": "^3.1.0",
-    "split-string": "^1.0.1",
-    "union-value": "^1.0.1"
+    "arr-flatten": "^1.1.0",
+    "for-own": "^1.0.0",
+    "get-value": "^3.0.1",
+    "kind-of": "^6.0.2",
+    "split-string": "^6.1.0",
+    "union-value": "^2.0.1"
   },
   "devDependencies": {
-    "gulp-format-md": "^0.1.11",
-    "mocha": "^3.2.0",
-    "should": "^11.2.0"
+    "gulp-format-md": "^2.0.0",
+    "mocha": "^6.2.0",
+    "should": "^13.2.3"
   },
   "keywords": [
     "array",
