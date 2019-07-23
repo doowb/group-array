@@ -1,11 +1,11 @@
 'use strict';
 
-var split = require('split-string');
-var flatten = require('arr-flatten');
-var union = require('union-value');
-var forOwn = require('for-own');
-var typeOf = require('kind-of');
-var get = require('get-value');
+const split = require('split-string');
+const flatten = require('arr-flatten');
+const union = require('union-value');
+const forOwn = require('for-own');
+const typeOf = require('kind-of');
+const get = require('get-value');
 
 function groupFn(arr, props) {
   if (arr == null) {
@@ -20,21 +20,21 @@ function groupFn(arr, props) {
     return arr;
   }
 
-  var args = flatten([].slice.call(arguments, 1));
-  var groups = groupBy(arr, args[0]);
+  let args = flatten([].slice.call(arguments, 1));
+  let groups = groupBy(arr, args[0]);
 
-  for (var i = 1; i < args.length; i++) {
+  for (let i = 1; i < args.length; i++) {
     toGroup(groups, args[i]);
   }
   return groups;
 }
 
 function groupBy(arr, prop, key) {
-  var groups = {};
+  let groups = {};
 
-  for (var i = 0; i < arr.length; i++) {
-    var obj = arr[i];
-    var val;
+  for (let i = 0; i < arr.length; i++) {
+    let obj = arr[i];
+    let val;
 
     // allow a function to modify the object
     // and/or return a val to use
@@ -65,18 +65,18 @@ function groupBy(arr, prop, key) {
 
 function eachValue(groups, obj, val) {
   if (Array.isArray(val)) {
-    val.forEach(function(key) {
+    val.forEach(key => {
       union(groups, escape(key), obj);
     });
   } else {
-    forOwn(val, function(v, key) {
+    forOwn(val, (v, key) => {
       union(groups, escape(key), obj);
     });
   }
 }
 
 function toGroup(groups, prop) {
-  forOwn(groups, function(val, key) {
+  forOwn(groups, (val, key) => {
     if (!Array.isArray(val)) {
       groups[key] = toGroup(val, prop, key);
     } else {
