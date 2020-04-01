@@ -330,4 +330,15 @@ describe('issues', () => {
     let actual = groupArray(fixture, 'tagKey');
     assert.deepEqual(actual, require('./expected/issue-10.js'));
   });
+
+  it('#11 should group keys with an dot at the end', () => {
+    let fixture = [{ name: 'foo', value: 1}, { name: 'foo.bar.', value: 2 }];
+    let expected = {
+      foo: [{ name: 'foo', value: 1 }],
+      'foo.bar.': [{ name: 'foo.bar.', value: 2 }]
+    };
+
+    let actual = groupArray(fixture, 'name');
+    assert.deepEqual(actual, expected);
+  });
 });
