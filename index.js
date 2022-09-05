@@ -1,13 +1,12 @@
 'use strict';
 
 const split = require('split-string');
-const flatten = require('arr-flatten');
 const union = require('union-value');
 const forOwn = require('for-own');
 const typeOf = require('kind-of');
 const get = require('get-value');
 
-function groupFn(arr, props) {
+function groupFn(arr, ...props) {
   if (arr == null) {
     return [];
   }
@@ -20,7 +19,7 @@ function groupFn(arr, props) {
     return arr;
   }
 
-  let args = flatten([].slice.call(arguments, 1));
+  let args = props.flat(Infinity);
   let groups = groupBy(arr, args[0]);
 
   for (let i = 1; i < args.length; i++) {

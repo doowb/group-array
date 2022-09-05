@@ -20,13 +20,12 @@
   ],
   "main": "index.js",
   "engines": {
-    "node": ">=8"
+    "node": ">=11.0.0"
   },
   "scripts": {
     "test": "mocha"
   },
   "dependencies": {
-    "arr-flatten": "^1.1.0",
     "for-own": "^1.0.0",
     "get-value": "^3.0.1",
     "kind-of": "^6.0.2",
