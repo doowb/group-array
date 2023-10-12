@@ -20,7 +20,7 @@
   ],
   "main": "index.js",
   "engines": {
-    "node": ">=8"
+    "node": ">=12"
   },
   "scripts": {
     "test": "mocha"
@@ -29,13 +29,13 @@
     "arr-flatten": "^1.1.0",
     "for-own": "^1.0.0",
     "get-value": "^3.0.1",
-    "kind-of": "^6.0.2",
+    "kind-of": "^6.0.3",
     "split-string": "^6.1.0",
     "union-value": "^2.0.1"
   },
   "devDependencies": {
     "gulp-format-md": "^2.0.0",
-    "mocha": "^6.2.0",
+    "mocha": "^9.2.2",
     "should": "^13.2.3"
   },
   "keywords": [
